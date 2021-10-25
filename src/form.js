@@ -26,9 +26,9 @@ function Form({news, setNews}){
 
   return (
     <form className="bg-secondary rounded p-3" onSubmit={handleFormSubmit} action="https:echo.htlmacademy.ru" method="POST">
-      <input className="form-control mb-4" ref = {inputNameRef} type="text" />
-      <input className="form-control mb-4" ref = {inputDescRef} type="text" />
-      <input className="form-control mb-4" ref = {inputTagRef} type="text" />
+      <input className="form-control mb-4" ref = {inputNameRef} type="text" placeholder="Enter news title" />
+      <input className="form-control mb-4" ref = {inputDescRef} type="text" placeholder="Enter news description" />
+      <input className="form-control mb-4" ref = {inputTagRef} type="text" placeholder="Enter tags with #" />
       <button className="btn btn-success" type="submit">SUBMIT</button>
     </form>
   )
