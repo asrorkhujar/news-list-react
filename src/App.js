@@ -1,24 +1,39 @@
-import Form from "./form";
-import Item from "./item";
-import { useState } from "react";
+// import Form from "./form";
+// import Item from "./item";
+import { useEffect, useState } from "react";
+import News from "./components/form-news/form-news";
+import AddNews from "./components/news/add-news";
+import { trackPromise } from "react-promise-tracker";
+
 
 function App() {
-  const [news, setNews] = useState([
-    {
-      name: "Aplle maxsuloti",
-      desc: "iPhone 13 Pro Max haqida ma'lumotlar",
-      tags: "#tech"
-    }
-  ]);
+
+  // const TOP_HEADLINES_URL = "https://newsapi.org/v2/top-headlines?country=ru&apiKey=bfc1f9b2dc384d1081e6f5a137b7288f";
+  // const NEWS_SEARCH_URL = 'https://newsapi.org/v2/everything?apiKey=bfc1f9b2dc384d1081e6f5a137b7288f';
+
+  const [news, setNews] = useState([]);
+
+  useEffect(() => {
+    trackPromise(
+      fetch("https://newsapi.org/v2/top-headlines?country=ru&apiKey=bfc1f9b2dc384d1081e6f5a137b7288f")
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'ok') {
+          setNews(data.articles);
+        }
+      })
+    )
+  }, []);
+
 
   return (
     <>
       <main>
         <div className="container mt-5">
           <h1>News</h1>
-          <Form news={news} setNews={setNews}></Form>
+          <AddNews news={news} setNews={setNews}></AddNews>
           <ul className="list-unstyled">
-            {news.map((newss) => <Item {...newss} />)}
+            {news.map((newss) => <News {...newss} news={news} setNews={setNews} />)}
           </ul>
         </div>
       </main>
